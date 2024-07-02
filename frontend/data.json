@@ -1,0 +1,13 @@
+[
+  {
+    "key": "JIRA-729",
+    "type": "Epic",
+    "summary": "As a SRE engineer I want to push the metrics an...",
+    "assignee": "Super MAN ",
+    "created": "28-06-2024",
+    "duedate": "19-07-2024",
+    "status": "New",
+    "last_comment": "No comments",
+    "link": "https://jira.atlassian.com/browse/JIRA-729"
+  }
+]

@@ -1,0 +1,16 @@
+FROM python:3.12.4-alpine3.20 as dev
+WORKDIR /work
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM python:3.9.19-slim
+COPY ./src/ /app
+COPY requirements.txt ./ 
+RUN pip install --no-cache-dir -r requirements.txt
+ENV USERID=userid
+ENV PASSWORD=password
+ENV URI=url
+
+
+ENTRYPOINT [ "python", "/app/app.py" ]
+CMD ["USERID", "PASSWORD", "URI"]
