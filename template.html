@@ -2,11 +2,16 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <title>JIRA Reports</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="scripts.js"></script>
+    <style>
+        /* Additional styles can be added here */
+    </style>
 </head>
 
 <body>
@@ -18,27 +23,49 @@
             <li><a data-toggle="tab" href="#report_c">User Story Status Counts</a></li>
             <li><a data-toggle="tab" href="#report_d">Sub-task Status Counts</a></li>
             <li><a data-toggle="tab" href="#report_e">Latest Updates</a></li>
+            <li><a data-toggle="tab" href="#report_f_by_user">User Task List</a></li>
+            <li><a data-toggle="tab" href="#report_f_by_type">Task List by Type</a></li>
         </ul>
         <div class="tab-content">
             <div id="report_a" class="tab-pane fade in active">
                 <h3>Issue Counts</h3>
-                {report_a}
+                <div class="table-responsive">
+                    {report_a}
+                </div>
             </div>
             <div id="report_b" class="tab-pane fade">
                 <h3>User Issue Counts</h3>
-                {report_b}
+                <div class="table-responsive">
+                    {report_b}
+                </div>
             </div>
             <div id="report_c" class="tab-pane fade">
                 <h3>User Story Status Counts</h3>
-                {report_c}
+                <div class="table-responsive">
+                    {report_c}
+                </div>
             </div>
             <div id="report_d" class="tab-pane fade">
                 <h3>Sub-task Status Counts</h3>
-                {report_d}
+                <div class="table-responsive">
+                    {report_d}
+                </div>
             </div>
             <div id="report_e" class="tab-pane fade">
                 <h3>Latest Updates</h3>
-                {report_e}
+                <div class="table-responsive">
+                    {report_e}
+                </div>
+            </div>
+            <div id="report_f_by_user" class="tab-pane fade">
+                <h3>User Task List</h3>
+                <div class="tab-content">
+                    {report_f_by_user}
+                </div>
+            </div>
+            <div id="report_f_by_type" class="tab-pane fade">
+                <h3>Task List by Type</h3>
+                {report_f_by_type}
             </div>
         </div>
     </div>

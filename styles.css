@@ -1,8 +1,27 @@
+/* styles.css */
+
+/* Sortable table headers */
 .table-sortable th {
     cursor: pointer;
 }
 
+/* Ensure tables are responsive and can scroll horizontally */
+.table-responsive {
+    overflow-x: auto;
+    min-width: auto;
+    /* Ensure it does not have a fixed minimum width */
+}
+
+/* Allow tables to expand to fit content */
 .table {
     width: 100%;
     table-layout: auto;
+    max-width: none;
+    /* Allow table to expand to fit content */
+}
+.user-heading {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }

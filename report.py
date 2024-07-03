@@ -61,6 +61,86 @@ def report_latest_updates(data):
     return latest_updates
 
 
+# Function to generate report f by user
+def report_f_by_user(data):
+    # Group by assignee and type
+    grouped = data.groupby(["assignee", "type"])
+
+    # Initialize an empty dictionary to store the HTML tables
+    report_f_by_user_html = {}
+
+    # Iterate over each group
+    for (assignee, type_), group in grouped:
+        # Filter out relevant columns and convert 'key' to hyperlink
+        filtered_group = group[
+            [
+                "key",
+                "type",
+                "summary",
+                "assignee",
+                "created",
+                "duedate",
+                "status",
+                "last_comment",
+                "link",
+            ]
+        ]
+        filtered_group["key"] = filtered_group.apply(
+            lambda x: f'<a href="{x["link"]}" target="_blank">{x["key"]}</a>', axis=1
+        )
+
+        # Convert to HTML table with assignee as heading
+        table_html = f"<h3>{assignee}</h3>\n"
+        table_html += filtered_group.drop(columns=["link"]).to_html(
+            index=False, classes="table table-sortable", escape=False
+        )
+
+        # Save the HTML table for this assignee and type
+        report_f_by_user_html[(assignee, type_)] = table_html
+
+    return report_f_by_user_html
+
+
+# Function to generate report f by type
+def report_f_by_type(data):
+    # Group by type
+    grouped = data.groupby("type")
+
+    # Initialize an empty dictionary to store the HTML tables
+    report_f_by_type_html = {}
+
+    # Iterate over each group
+    for type_, group in grouped:
+        # Filter out relevant columns and convert 'key' to hyperlink
+        filtered_group = group[
+            [
+                "key",
+                "type",
+                "summary",
+                "assignee",
+                "created",
+                "duedate",
+                "status",
+                "last_comment",
+                "link",
+            ]
+        ]
+        filtered_group["key"] = filtered_group.apply(
+            lambda x: f'<a href="{x["link"]}" target="_blank">{x["key"]}</a>', axis=1
+        )
+
+        # Convert to HTML table with type as heading
+        table_html = f"<h3>{type_}</h3>\n"
+        table_html += filtered_group.drop(columns=["link"]).to_html(
+            index=False, classes="table table-sortable", escape=False
+        )
+
+        # Save the HTML table for this type
+        report_f_by_type_html[type_] = table_html
+
+    return report_f_by_type_html
+
+
 # Function to save reports to CSV files and create HTML content
 def save_reports_and_create_html(data, output_dir, template_file):
     # Generate reports
@@ -69,21 +149,23 @@ def save_reports_and_create_html(data, output_dir, template_file):
     report_c = report_user_story_status_counts(data)
     report_d = report_sub_task_status_counts(data)
     report_e = report_latest_updates(data)
+    report_f_user = report_f_by_user(data)
+    report_f_type = report_f_by_type(data)
 
     # Convert reports to HTML tables
-    report_a_html = report_a.to_html(
+    report_a_html = report_a.rename(columns=str.capitalize).to_html(
         index=False, classes="table table-sortable", escape=False
     )
-    report_b_html = report_b.to_html(
+    report_b_html = report_b.rename(columns=str.capitalize).to_html(
         index=False, classes="table table-sortable", escape=False
     )
-    report_c_html = report_c.to_html(
+    report_c_html = report_c.rename(columns=str.capitalize).to_html(
         index=False, classes="table table-sortable", escape=False
     )
-    report_d_html = report_d.to_html(
+    report_d_html = report_d.rename(columns=str.capitalize).to_html(
         index=False, classes="table table-sortable", escape=False
     )
-    report_e_html = report_e.to_html(
+    report_e_html = report_e.rename(columns=str.capitalize).to_html(
         index=False, classes="table table-sortable", escape=False
     )
 
@@ -98,13 +180,15 @@ def save_reports_and_create_html(data, output_dir, template_file):
         report_c=report_c_html,
         report_d=report_d_html,
         report_e=report_e_html,
+        report_f_by_user="\n".join(report_f_user.values()),
+        report_f_by_type="\n".join(report_f_type.values()),
     )
 
     # Save HTML content to file
-    with open(f"{output_dir}/report.html", "w") as file:
+    with open("index.html", "w") as file:
         file.write(html_content)
 
-    print("Reports have been saved to the specified directory and HTML file created.")
+    print("Reports have been saved to index.html.")
 
 
 # Load and flatten JSON data
