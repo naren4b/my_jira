@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>JIRA Reports</h2>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#report_a">Issue Counts</a></li>
+            <li><a data-toggle="tab" href="#report_b">User Issue Counts</a></li>
+            <li><a data-toggle="tab" href="#report_c">User Story Status Counts</a></li>
+            <li><a data-toggle="tab" href="#report_d">Sub-task Status Counts</a></li>
+            <li><a data-toggle="tab" href="#report_e">Latest Updates</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="report_a" class="tab-pane fade in active">
+                <h3>Issue Counts</h3>
+                {report_a}
+            </div>
+            <div id="report_b" class="tab-pane fade">
+                <h3>User Issue Counts</h3>
+                {report_b}
+            </div>
+            <div id="report_c" class="tab-pane fade">
+                <h3>User Story Status Counts</h3>
+                {report_c}
+            </div>
+            <div id="report_d" class="tab-pane fade">
+                <h3>Sub-task Status Counts</h3>
+                {report_d}
+            </div>
+            <div id="report_e" class="tab-pane fade">
+                <h3>Latest Updates</h3>
+                {report_e}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
