@@ -7,24 +7,35 @@ from jira import JIRA
 import pandas as pd
 
 import argparse
-
+import report
 
 user = os.environ["USERID"]  # sys.argv[1]
 password = os.environ["PASSWORD"]  # sys.argv[2]
 uri = os.environ["URI"]  ## sys.argv[3]
+merged_data = []
+
 
 # user = sys.argv[1]
 # password = sys.argv[2]
 # uri = sys.argv[3]
 server = "https://" + uri
-timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+report_id = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 print("server :" + server)
 
 options = {"server": server}
-output_dir = "out/" + timestamp
+output_dir = "out/" + report_id
 os.makedirs(output_dir, exist_ok=True)
 jira = JIRA(options, basic_auth=(user, password))
+
+
+def merge_json_files():
+    data_json = os.path.join(output_dir, f"data_{report_id}.json")
+    data_csv = os.path.join(output_dir, f"data_{report_id}.csv")
+    with open(data_json, "w") as file:
+        json.dump(merged_data, file, indent=4)
+    print(f"Report Generated {data_json}")
+    to_csv(data_json, data_csv)
 
 
 def to_csv(filename_json, filename_csv):
@@ -97,14 +108,20 @@ def fetch_jira_issues(type, jql_query):
 
 def main():
     report_types = {
-        "all": "assignee = currentUser() and type in ('Epic','User Story','Sub-task')"
+        "epic": "assignee = currentUser() and type = Epic AND Sprint in openSprints()",
+        "us": "assignee = currentUser() and type = 'User Story' AND Sprint in openSprints()",
+        "st": "assignee = currentUser() and type = 'Sub-task' AND Sprint in openSprints()",
     }
+
     for type, jql_query in report_types.items():
-        print("Report: " + timestamp)
-        filename_json = os.path.join(output_dir, f"{type}_issues_{timestamp}.json")
-        filename_csv = os.path.join(output_dir, f"{type}_issues_{timestamp}.csv")
+        print("Report: " + report_id)
+        filename_json = os.path.join(output_dir, f"{type}_issues_{report_id}.json")
+        filename_csv = os.path.join(output_dir, f"{type}_issues_{report_id}.csv")
         data = fetch_jira_issues(type, jql_query)
+        merged_data.append(data)
         save_issues_to_file(type, data, filename_json, filename_csv)
+    merge_json_files()
+    report.generate_report(report_id)
 
 
 if __name__ == "__main__":
