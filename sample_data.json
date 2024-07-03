@@ -1,0 +1,40 @@
+  [
+    {
+      "key": "JIRA-729",
+      "type": "Epic",
+      "summary": "As a Devops engineer I want to push the metrics an...",
+      "assignee": "Super MAN 2",
+      "created": "28-06-2024",
+      "duedate": "19-07-2024",
+      "status": "New",
+      "last_comment": "No comments",
+      "link": "https://jira.atlassian.com/browse/JIRA-729"
+    }
+  ],
+  [
+    {
+      "key": "JIRA-7219",
+      "type": "User Story",
+      "summary": "As a Devops engineer I want to push the metrics an...",
+      "assignee": "Super MAN 1",
+      "created": "28-06-2024",
+      "duedate": "19-07-2024",
+      "status": "New",
+      "last_comment": "No comments",
+      "link": "https://jira.atlassian.com/browse/JIRA-7219"
+    }
+  ],
+  [
+    {
+      "key": "JIRA-229",
+      "type": "Sub-task",
+      "summary": "As a Devops engineer I want to push the metrics an...",
+      "assignee": "Super MAN 3",
+      "created": "28-06-2024",
+      "duedate": "19-07-2024",
+      "status": "Closed",
+      "last_comment": "No comments",
+      "link": "https://jira.atlassian.com/browse/JIRA-229"
+    }
+  ]
+]
